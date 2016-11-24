@@ -3,8 +3,16 @@ import math;
 
 window = turtle.Screen();
 my_turtle = turtle.Turtle();
+keepGoing = True;
 
-
+"""
+#Function Name:		getProperInput()
+#Description:		Get the input from the user, and send it through the input checking prior to returning the value
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	string must be less than or equal to 6 characters in length, and must be of the specific 6 usable chars
+#Return:			returns the proper string input
+"""
 def getProperInput():
 	good = False;
 	while (good == False):
@@ -23,6 +31,14 @@ def getProperInput():
 			good = False;
 	return inp;
 
+"""
+#Function Name:		checkInputForChars()
+#Description:		Checks if the inputed string follows the proper 6 usable characters
+#Parameters:		inp as string for the input of the user
+#Pre-Conditions:	inp must be a string
+#Post-Conditions:	must return a boolean
+#Return:			will return true if all characters in inp follows the 6 usable chars, returns false if one or more does not
+"""
 def checkInputForChars(inp):
 	print(len(inp));
 	good = True;
@@ -55,6 +71,14 @@ def checkInputForChars(inp):
 
 	return good;
 
+"""
+#Function Name:		b()
+#Description:		draws out a B with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def b():
 	turtle.left(90);
 	turtle.forward(50);
@@ -72,6 +96,14 @@ def b():
 	turtle.forward(50);
 	turtle.right(90);
 
+"""
+#Function Name:		r()
+#Description:		draws out a R with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def r():
 	turtle.left(90);
 	turtle.forward(50);
@@ -88,6 +120,14 @@ def r():
 	turtle.forward(math.sqrt(5000));
 	turtle.left(45);
 
+"""
+#Function Name:		y()
+#Description:		draws out a Y with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def y():
 	turtle.right(90);
 	turtle.forward(50);
@@ -107,7 +147,14 @@ def y():
 	turtle.right(90);
 	turtle.left(90);
 
-
+"""
+#Function Name:		c()
+#Description:		draws out a C with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def c():
 	turtle.left(90);
 	turtle.forward(50);
@@ -122,6 +169,14 @@ def c():
 	turtle.left(90);
 	turtle.forward(50);
 
+"""
+#Function Name:		e()
+#Description:		draws out a E with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def e():
 	turtle.left(90);
 	turtle.forward(50);
@@ -137,6 +192,14 @@ def e():
 	turtle.left(90);
 	turtle.forward(50);
 
+"""
+#Function Name:		i()
+#Description:		draws out a I with turtle
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def i():
 	turtle.penup();
 	turtle.setx(turtle.xcor() + 25);
@@ -157,13 +220,28 @@ def i():
 	turtle.forward(5);
 	turtle.right(180);
 
-
+"""
+#Function Name:		space()
+#Description:		resets turtle orientation and sets its x a distance away as a space
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def space():
 	turtle.penup();
 	turtle.sety(0);
 	turtle.setx(turtle.xcor() + 100);
 	turtle.pendown();
 
+"""
+#Function Name:		drawInput()
+#Description:		iterate through all the letters and call their specific draw functions
+#Parameters:		inp as string from the users input
+#Pre-Conditions:	inp must be a string
+#Post-Conditions:	none
+#Return:			none
+"""
 def drawInput(inp):
 	reset();
 	for x in range(len(inp)):
@@ -181,15 +259,14 @@ def drawInput(inp):
 			i();
 		space();
 
-
-def drawAgain():
-	inp = input("Do you wish to go again? (y/n)");
-	if (inp == 'y'):
-		return True;
-	elif (inp == 'n'):
-		return False;
-	return False;
-
+"""
+#Function Name:		reset
+#Description:		resets the board and the turtle for another draw sesh
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def reset():
 	window.clear();
 	turtle.penup();
@@ -197,16 +274,28 @@ def reset():
 	turtle.sety(0);
 	turtle.pendown();
 
+def isOnTurtle(x, y):
+	if (x >= turtle.xcor() - 10 and x <= turtle.xcor() + 10):
+		if (y >= turtle.ycor() - 10 and y <= turtle.ycor() + 10):
+			keepGoing = True;
+	keepGoing = False;
+
+"""
+#Function Name:		main()
+#Description:		function that keeps calling the user input and draw functions, untill the user chooces to stop drawing.
+#Parameters:		none
+#Pre-Conditions:	none
+#Post-Conditions:	none
+#Return:			none
+"""
 def main():
-	keepGoing = True;
 	while (keepGoing == True):
+		reset();
 		inp = getProperInput();
 		print("the entered input of %s was a proper use and will be printed.." %inp);
 		drawInput(inp);
-		keepGoing = drawAgain();
+		print("Click the turtle if you wish to draw another string, or close the window to quit.");
+		turtle.onclick(isOnTurtle);
 
 
 main();
-
-window.listen();
-window.mainloop();
